@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js随机生成验证码</title>
+    <style type="text/css">
+        .wrap {
+            width: 400px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        #text {
+            height: 30px;
+            text-indent: 1em;
+        }
+        #code {
+            display: inline-block;
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            text-decoration: none;
+            letter-spacing: 7px;
+            padding-left: 7px;
+            background-color: #aaa;
+            color: #fff;
+            vertical-align: middle;
+            font-weight: bold;
+        }
+        #btn {
+            width: 60px;
+            height: 30px;
+            vertical-align: middle;
+            border: #153021;
+            background-color: #499999;
+            color: #fff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body onload="creatCode()">
+<div class="wrap">
+    <input type="text" id="text" placeholder="请输入验证码"/>
+    <a href="javascript:" id="code" onclick="creatCode(this)"></a>
+    <input type="button" id="btn" value="验证"/>
+    
+</div>
+
+<script type="text/javascript">
+    // 获取相关元素
+    var text = document.getElementById("text");
+    var code = document.getElementById("code");
+    var btn = document.getElementById("btn");
+    // 用来存储验证码的值
+    var check = "";
+    //库中的随机码
+
+    //验证码编辑事件
+     function creatCode() {
+        // 这个重新声明，可以不会多个字母出现,成为全局变量
+        check= "";
+        var randomCode = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R', 'S','T','U','V','W','X','Y','Z'];
+        var len = 4;
+        for (var i=0; i<len; i++) {
+            // 获得随机的下标
+            var index = Math.floor(Math.random()*36);
+            check += randomCode[index];
+        }
+        code.innerHTML = check;
+    }
+    // 验证事件
+    btn.onclick = function() {
+        var val = text.value.toUpperCase();
+        if (val == "") {
+            alert("请输入验证码！")
+        }else if (val != check) {
+            alert("验证码有误，重新输入")
+            val = " ";
+            //更新验证码
+            creatCode();
+        }else {
+            window.open("http://www.baidu.com","_self");
+        }
+    }
+</script>
+</body>
+</html>
