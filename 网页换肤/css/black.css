@@ -1,0 +1,7 @@
+ul.skin li.cur {
+    padding: 0;
+    border: 5px solid #000000;
+}
+.nav {
+    background-color: #000000;
+}

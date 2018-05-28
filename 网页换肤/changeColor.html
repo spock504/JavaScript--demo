@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网页换肤</title>
+    <style type="text/css">
+        body, ul, li, div {
+            margin: 0;
+            padding: 0;
+        }
+        li {
+            list-style: none;
+        }
+        .outer {
+            margin: 20px auto;
+            width: 470px;
+        }
+        .skin li {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            padding: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            background-color: #fff;
+        }
+        .skin li:nth-child(1) {
+            background-color: #008000;
+        }
+        .skin li:nth-child(2) {
+            background-color: #ff0000;
+        }
+        .skin li:nth-child(3) {
+            background-color: #000000;
+        }
+        .nav {
+            background-color: #008000;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .nav li {
+            display: inline-block;
+            height: 30px;
+            line-height: 30px;
+        }
+        .nav li a {
+            text-decoration: none;
+            /* 上下padding太大会扩展边框的长度 */
+            padding: 0px 20px;  
+            border-right: 1px solid #fff;
+            color: #fff;
+        }
+        /* 注意先选择li,再确定合适的a标签 */
+        .nav li:last-child a {
+            border-right: none;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="./css/green.css">
+</head>
+<body>
+<div class="outer">
+    <ul class="skin">
+        <li id="red" title="red"></li>
+        <li id="green" title="green"></li>
+        <li id="black" title="black"></li>
+    </ul>
+    <ul class="nav">
+        <li><a href="#">新闻</a></li>
+        <li><a href="#">娱乐</a></li>
+        <li><a href="#">体育</a></li>
+        <li><a href="#">电影</a></li>
+        <li><a href="#">音乐</a></li>
+        <li><a href="#">旅游</a></li>
+    </ul>
+</div>
+<script type="text/javascript">
+    var link = document.querySelector("link");
+    var ul = document.querySelector(".skin");
+    var lis = ul.querySelectorAll("li");
+    for (var i=0; i<lis.length; i++) {
+        lis[i].onclick = function() {
+            for (var i = 0; i < lis.length; i++) {
+                lis[i].className = "";
+            }
+            this.className = "cur";
+            link['href'] = "./css/"+this.id + ".css";
+        }
+    }
+
+</script>
+</body>
+</html>

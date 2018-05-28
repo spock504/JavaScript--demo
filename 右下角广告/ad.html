@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>右下角广告</title>
+    <style>
+        .rightAd {
+            width: 300px;
+            height: 200px;
+            background-color: #ccc;
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            display: none;
+        }
+        span {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            cursor: pointer;
+        }
+        .hide {
+            display: none;
+        }
+        .box {
+            margin: 10px;
+        border: 1px solid #ccc;
+        }
+        p {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body onload="Addown()">
+<div class="box">
+    <p>this is 20px margin</p>
+</div>
+<div class="rightAd">fixed小广告,停留三秒后消失<span id="span">X</span></div>
+<script type="text/javascript">
+    var span = document.getElementById("span");
+    var Ad = document.getElementsByClassName("rightAd")[0];
+    span.onclick = function() {
+        Ad.className = 'hide';
+    }
+    var h=0;
+    var step = 1;
+    function Addown() {
+        Ad.style.height = h+"px";
+        Ad.style.display = "block";
+        if (h<200) {
+            h+=step;
+            setTimeout(Addown, 1);
+        }else {
+            setTimeout(Adup, 3000);
+        }
+    }
+    function Adup() {
+        Ad.style.height = h+"px";
+        if (h>0) {
+            h-=1;
+            setTimeout(Adup, 1);
+        }
+    }
+</script>
+</body>
+</html>
