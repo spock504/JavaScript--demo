@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>表单验证</title>
+  <link rel="stylesheet" type="text/css" href="form.css">
+</head>
+<body>
+      <form method="POST" action="">
+        <div class="form-box">
+          <div class="form-left">
+            <span>登录名</span>
+          </div>
+          <div class="form-right">
+            <input type="input" name="user_name" placeholder="输入登录名"/>
+            <span class="note"></span>
+            <p id="count">登录名要按格式输入</p>
+          </div>
+        </div>
+        <div class="form-box">
+          <div class="form-left">
+            <span>请输入密码</span>
+          </div>
+          <div class="form-right">
+            <input type="password" name="password1" placeholder="密码"/>
+            <span class="note"></span>
+            <p class="des"><em>弱</em><em>中</em><em>强</em></p>
+          </div>
+        </div>
+        <div class="form-box">
+          <div class="form-left">
+            <span>请重复输入</span>
+          </div>
+          <div class="form-right">
+            <input type="password" name="password2" placeholder="再次输入" disabled="disabled"/>
+            <span class="note">请再次输入</span>
+            <p>密码为6~16位英文数字</p>
+          </div>
+        </div>
+    </form>
+    <script type="text/javascript" src="form.js"></script>
+</body>
+</html>
