@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>滚动条的实现</title>
+    <style>
+        html, body, div, ul, li, p {
+            margin: 0;
+            padding: 0;
+        }
+        li {
+            list-style: none;
+        }
+        .clearfix::after {
+            display: block;
+            content: ".";
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+
+        body {
+            background-color: #ccc;
+        }
+        .scrollBox {
+            width: 540px;
+            margin: 20px auto;
+            background-color: #fff;
+            border: 2px solid #e5e5e5;
+        }
+        .scroll-tab {
+            height: 30px;
+            border: 1px solid #e5e5e5;
+            color: #666;
+            background-color: #f8f8f8;
+        }
+        .scroll-tab .tab-item {
+            float: left;
+            font: 16px/30px "Microsoft YaHei";
+            line-height: 30px;
+            padding:0 20px;
+            cursor: pointer;
+        }
+        /* 选中时的背景颜色 */
+        .scroll-tab .tab-active {
+            color: #00be3c;
+            background-color: #fff;
+            border-top:2px solid #00be3c;
+            margin: -1px 0;
+        }
+        /* 滚动内容区 */
+        .scroll-wrap {
+            width: 100%;
+            height: 300px;
+            position: relative;
+        }
+        .scroll-wrap .scroll-cont {
+            height: 100%;
+            padding: 0 15px;
+            overflow: hidden;
+        }
+        .scroll-wrap .scroll-cont h3 {
+            font: 16px/3 "Microsoft YaHei";
+            text-align: center;
+        }
+        .scroll-wrap .scroll-cont p {
+            font-size: 14px;
+            line-height: 30px;
+            text-indent: 2em;
+        }
+        /* 写个滚动条 */
+        .scroll-bar {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 10px;
+            height: 100%;
+            background-color: #aeaeae;
+        }
+        .scroll-bar .scroll-slider {
+            position: absolute;
+            top: 0;
+            left: 1px;
+            width: 8px;
+            height: 40px;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    
+
+<div class="scrollBox">
+    <ul class="scroll-tab">
+        <!-- 标签切换 -->
+        <li class="tab-item tab-active">one</li>
+        <li class="tab-item">two</li>
+        <li class="tab-item">three</li>
+        <li class="tab-item">four</li>
+    </ul>
+    <!-- 滚动内容 -->
+    <div class="scroll-wrap clearfix">
+    <!-- 内容 -->
+        <div class="scroll-cont">
+            <h3 class="anchor">春天来了</h3>
+            <div class="scroll-ol">
+                <p>来就来了，关你什么事。一年之计在于春，春天来了，万物复苏。那一碧千里的小草绿了，像一块绿色的地毯铺在大地上；那五彩缤纷、灿烂多姿的花儿像七彩的云朵随风飘游；那壮丽高耸、生机勃勃的大树像是被人涂了一层绿油油的漆·</p>
+            </div>
+            <div class="scroll-ol">
+            <h3 class="anchor">夏天来了</h3>
+                <p>夏日，就应当是静谧的，不需要风的做伴，这会打破一切静止的画面，不需要与别人分享，这样的美丽就会减少一分，不需要蝉鸣的演奏，这样会增加不协调的声音。就只需明媚的阳光，高高的天空与漂浮的云朵和我这一个观赏者就够了，就因这样，我对这情景越来越喜爱，把我所有的感情倾注于它，已不是用“喜爱”二字来形容的。只能用心灵来诉说……</p>
+            </div>
+            <div class="scroll-ol">
+            <h3 class="anchor">秋天来了</h3>
+                <p>夏日，就应当是静谧的，不需要风的做伴，这会打破一切静止的画面，不需要与别人分享，这样的美丽就会减少一分，不需要蝉鸣的演奏，这样会增加不协调的声音。就只需明媚的阳光，高高的天空与漂浮的云朵和我这一个观赏者就够了，就因这样，我对这情景越来越喜爱，把我所有的感情倾注于它，已不是用“喜爱”二字来形容的。只能用心灵来诉说……</p>
+            </div>
+            <div class="scroll-ol">
+            <h3 class="anchor">冬天来了</h3>
+                <p>夏日，就应当是静谧的，不需要风的做伴，这会打破一切静止的画面，不需要与别人分享，这样的美丽就会减少一分，不需要蝉鸣的演奏，这样会增加不协调的声音。就只需明媚的阳光，高高的天空与漂浮的云朵和我这一个观赏者就够了，就因这样，我对这情景越来越喜爱，把我所有的感情倾注于它，已不是用“喜爱”二字来形容的。只能用心灵来诉说……</p>
+            </div>
+        </div>
+    <!-- 滚动条 -->
+        <div class="scroll-bar">
+            <!-- 滚动滑块 -->
+            <div class="scroll-slider"></div>
+        </div>
+    </div>
+</div>
+    <script type="text/javascript" src="./js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    // 创建全局变量，让匿名函数中的变量在外部能够访问
+    var Scroll = {};
+    // 自调用匿名函数，防止与已有函数、方法或变量冲突
+    (function(win,doc,$){
+        // 创建构造函数
+        function CusScrollBar(options){
+            // 实例化时，this就代表实例
+            this._init(options);
+        }
+        // 构造函数原型上添加属性和方法，所有实例上就能够共享(不同实例之间的属性相互独立)
+        // CusScrollBar.prototype._init = function() {
+        //     console.log("test");
+        // }
+        // 利用 $.extend(true, target object, object1);优化构造函数.
+        //CusScrollBar.prototype 上添加_init方法
+        $.extend(CusScrollBar.prototype, {
+            // 指定参数
+            _init:function(options){
+                //防止this的混用
+                var self = this;
+                // 指定默认属性
+                self.options = {
+                    scrollDir      : "y",   //滚动的方向
+                    contSelector   : "",    //滚动内容区选择器
+                    barSelector    : "",    //滚动条选择器
+                    sliderSelector : "",     //滚动滑块选择器
+                    tabItemSelector: ".tab-item",   //标签选择器 
+                    tabActiveClass : "tab-active",  //选中标签类名
+                    anchorSelector : ".anchor",
+                    wheelStep      : 10,     //滚轮步长
+                    correctSelector: '.correct-bot', // 矫正元素
+                    articleSelector: '.scroll-ol' //文章选择器
+                }
+                //通过参数传递，进行深拷贝，||是为了代码的健壮性
+                $.extend(true, self.options, options || {});
+                // console.log(self.options);
+                // 调用初始化DOM函数 
+                self._initDomEvent();
+                return self;
+            },
+            // 初始化DOM引用
+            // @method _initDomEvent
+            // @return {CusScrollBar}
+            _initDomEvent : function() {
+                // DOM的引用更方便使用
+                var opts = this.options;
+                // 滚动内容区，必填项
+                this.$cont = $(opts.contSelector);
+                // 滚动条滑块，必填项
+                this.$slider = $(opts.sliderSelector);
+                // 滚动条对象
+                this.$bar = opts.barSelector ? $(opts.barSelector) : self.$slider.parent();
+                // 标签项
+                this.$tabItem = $(opts.tabItemSelector);
+                //锚点项
+                this.$anchor = $(opts.anchorSelector);
+                //获取文档对象
+                this.$doc = $(doc);
+                //矫正元素对象
+                this.$correct = $(opts.correctSelector);
+                // 调用滑块拖动功能
+                this._initSliderDragEvent()
+                    ._initTabEvent()
+                    ._initArticleHeight()
+                    ._bindContScroll()
+                    ._bindMousewheel();
+            },
+            // 初始化文档高度
+            _initArticleHeight: function() {
+                  var self = this,
+                    lastArticle = self.$article.last();
+                  var lastArticleHeight = lastArticle.height(),
+                    contHeight = self.$cont.height();
+                  if (lastArticleHeight < contHeight) {
+                    self.$correct[0].style.height =
+                      contHeight - lastArticleHeight - self.$anchor.outerHeight() + 'px';
+                  }
+                  return self;
+                },
+            // 初始化滑块拖动功能
+            // @return {[Object]} [this]
+            _initSliderDragEvent:function() {
+                var slider = this.$slider,
+                // 获取slider元素
+                    sliderEl = slider[0],
+                    self = this;  //这里为this取值，不然会导致后面$cont[0]取到的元素有问题
+                if (sliderEl) {
+                    var doc = this.$doc,
+                        dragStartPagePosition,
+                        dragStartScrollPosition,
+                        dragContBarRate;
+                // 鼠标移动事件
+                function mousemoveHandler(e) {
+                    e.preventDefault();
+                    console.log('mousemove');
+                    // 判断是否有按下鼠标
+                    if (dragStartPagePosition == null) { return;}
+                        //传入的参数为内容的滚动高度
+                    self.scrollTo(dragStartScrollPosition + (e.pageY - dragStartPagePosition)*dragContBarRate);
+                }
+                // 事件对象是经过jQuery包装后的,可以不用考虑兼容性问题
+                slider.on('mousedown',function(e){
+                    // 阻止事件默认行为
+                    e.preventDefault();
+                    console.log('mousedown');
+                    // 鼠标按下时，获得鼠标相对于文档顶部边缘的距离
+                    dragStartPagePosition = e.pageY;
+                    // 超出元素上边界的那部分内容
+                    // 内容可滚动高度封装成一个方法
+                    dragStartScrollPosition = self.$cont[0].scrollTop;
+                    dragContBarRate = self.getMaxScrollPosition() / self.getMaxSliderPositon();
+                    // 鼠标按下时，仍能够移动
+                    // 通过事件的命名空间确定具体事件
+                    doc.on('mousemove.scroll', mousemoveHandler).on('mouseup.scroll', function(e) {
+                        console.log('mouseup');
+                        // 可以直接通过命名空间进行移除事件
+                        doc.off('.scroll');
+                    })
+                })
+                }
+                return self;
+            },
+            // 监听鼠标的滚轮事件
+            _bindMousewheel:function(){
+                var self = this;
+                self.$cont.on('mousewheel DOMMouseScroll', function(e){
+                    e.preventDefault();
+                    var oEv = originalEvent,
+                        wheelRange = oEv.wheelDelta? -oEv.wheelDelta/120 :(oEv.detail||0)/3;
+                    self.scrollTo(self.$cont[0].scrollTop + wheelRange*self.options.wheelStep);
+                });
+                return self;
+            },
+            //监听内容的滚动，同步滑块的位置
+            _bindContScroll : function() {
+                  var self = this;
+                  self.$cont.on('scroll', function() {
+                    var sliderEl = self.$slider && self.$slider[0];
+                    if (sliderEl) {
+                      sliderEl.style.top = self.getSliderPosition() + 'px';
+                    }
+                  });
+                return self;
+            },
+            // 初始化标签切换功能
+            _initTabEvent:function() {
+                var self = this;
+                self.$tabItem.on("click",function(e){
+                    e.preventDefault();
+                    var index = $(this).index();
+                    self.changeTabSelect(index);
+                    // 已经超出可视区的内容高度+超出锚点与内容容器的距离
+                    self.scrollTo(self.$cont[0].scrollTop + self.getAnchorPosition(index))
+
+                })
+                return self;
+            },
+            // 切换标签的选中 
+            changeTabSelect : function(index) {
+                var self = this,
+                    active = self.options.tabActiveClass;
+                return self.$tabItem.eq(index).addClass(active).siblings().removeClass(active);
+            },
+            // 获取指定锚点，position属性的top值(即与父容器的距离)
+            getAnchorPosition:function(index) {
+                return this.$anchor.eq(index).position().top;
+            },
+            //获取每个锚点位置信息的数组
+            getAllAnchorPosition: function() {
+              var self = this,
+                allPositionArr = [];
+              for (var i = 0; i < self.$anchor.length; i++) {
+                allPositionArr.push(
+                  self.$cont[0].scrollTop + self.getAnchorPosition(i)
+                );
+              }
+              return allPositionArr;
+            },
+            // 计算滑块儿的当前位置
+            getSliderPosition: function() {
+              var self = this,
+                maxSliderPosition = self.getMaxSliderPosition();
+              // console.log(maxSliderPosition);
+              return Math.min(
+                maxSliderPosition,
+                maxSliderPosition *
+                  self.$cont[0].scrollTop /
+                  self.getMaxScrollPosition()
+              );
+            },
+            // 内容可滚动的高度
+            getMaxScrollPosition :function() {
+                var self = this;
+                //取最大的值（可视区的高度, 整篇内容的完整高度）作为内容的整体高度
+                return Math.max(self.$cont.height(), self.$cont[0].scrollHeight) - self.$cont.height();
+            },
+            // 滑块可移动的距离
+            getMaxSliderPositon :function() {
+                var self = this; 
+                return self.$bar.height() - self.$slider.height();
+            },
+            scrollTo : function(positionVal) {
+                var self = this;
+                self.$cont.scrollTop(positionVal);
+            } 
+        });
+
+        win.CusScrollBar = CusScrollBar;
+    })(window,document,jQuery);
+    new CusScrollBar({
+        contSelector   : ".scroll-wrap",        //滚动内容区选择器
+        barSelector    : ".scroll-bar",         //滚动条选择器
+        sliderSelector : ".scroll-slider"       //滚动滑块选择器 
+    });
+</script>
+
+</body>
+</html>

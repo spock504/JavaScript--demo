@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>简单下拉菜单</title>
+    <style>
+        html,body,ul,li {
+            margin: 0;
+            padding: 0;
+        }
+        a {
+            text-decoration: none;
+        }
+        li {
+            list-style: none;
+        }
+        .navigation {
+            width: 950px;
+            margin: 10px auto;
+            border: 1px solid #333;
+            height: 63px;
+            background-color: #ce0100
+        }
+        .navigation li {
+            float: left;
+            width: 175px;
+            height: 63px;
+            text-align: center;
+            padding: 20px 5px 10px 5px;
+            position: relative;
+        }
+        .navigation li a {
+            color: #fff;
+        }
+        .navigation li a.active {
+            border: 1px solid blue;
+        }
+        .navigation li ul.subnav {
+            background-color: #e7f1d2;
+            width: 175px;
+            clear: both;
+            position: absolute;
+            top: 63px;
+            display: none;
+            border-radius: 8px;
+            border-left: 2px solid #998;
+            border-right: 2px solid #998;
+            border-bottom: 2px solid #998;
+        }
+        .navigation li ul.subnav li {
+            clear: both;
+            height: 40px;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+        .navigation li ul.subnav li a {
+            background: none;
+            border: none;
+        }
+        .navigation li ul.subnav li a:hover {
+            background-color: #dbf1ad;
+            color: #333;
+            border: none;
+        }
+    </style>
+
+</head>
+<body>
+<ul class="navigation">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Work</a>
+        <ul class="subnav">
+            <li><a href="#">Example1</a></li>
+            <li><a href="#">Example2</a></li>
+            <li><a href="#">Example3</a></li>
+        </ul>
+    </li>
+    <li><a href="#">Services</a></li>
+    <li><a href="#">About</a>
+        <ul class="subnav">
+            <li><a href="#">Example1</a></li>
+            <li><a href="#">Example2</a></li>
+            <li><a href="#">Example3</a></li>
+        </ul>
+    </li>
+    <li><a href="#">Contact</a></li>
+</ul>
+<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.navigation li').hover(function() {
+            $(this).find('.subnav').slideDown('slow');
+            $(this).find('a').addClass('active');
+        }, function() {
+            $(this).find('.subnav').slideUp('slow');
+            $(this).find('a').removeClass('active');
+        });
+    })
+    // animate({param1: value1, param2: value2}, speed)实现同样效果
+    //     $(document).ready(function(){
+    //     $('.navigation li').hover(function() {
+    //         $(this).find('.subnav').animate({opacity : '1.0',height:'toggle'}, 500);
+    //         $(this).find('a').addClass('active');
+    //     }, function() {
+    //         $(this).find('.subnav').animate({opacity:0,height:'toggle'}, 500);
+    //         $(this).find('a').removeClass('active');
+    //     });
+    // })
+
+</script>
+</body>
+</html>

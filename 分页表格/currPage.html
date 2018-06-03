@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设置表格分页</title>
+</head>
+<style>
+    table {
+        border: 1px solid #333;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #333;
+        padding: 5px 10px;
+    }
+    #nav a {
+        display: inline-block;
+        margin: 10px 30px;
+        text-decoration: none;
+        color: #5055e9;
+    }
+    #nav a.active {
+        color: #c40000;
+        font-size: 1.2em;
+    }
+</style>
+<body>
+<table class="data">
+    <thead>
+    <tr>
+        <th>Num</th>
+        <th>Catagory</th>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>1</td>
+        <td>Clothing</td>
+        <td>North</td>
+        <td>$188</td>
+        <td>In-stock</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Clothing</td>
+        <td>North</td>
+        <td>$188</td>
+        <td>In-stock</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Clothing</td>
+        <td>North</td>
+        <td>$188</td>
+        <td>In-stock</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Clothing</td>
+        <td>North</td>
+        <td>$188</td>
+        <td>In-stock</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Clothing</td>
+        <td>North</td>
+        <td>$188</td>
+        <td>In-stock</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Clothing</td>
+        <td>North</td>
+        <td>$188</td>
+        <td>In-stock</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Clothing</td>
+        <td>North</td>
+        <td>$188</td>
+        <td>In-stock</td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td>Clothing</td>
+        <td>North</td>
+        <td>$188</td>
+        <td>In-stock</td>
+    </tr>
+    <tr>
+        <td>9</td>
+        <td>Clothing</td>
+        <td>North</td>
+        <td>$188</td>
+        <td>In-stock</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>Clothing</td>
+        <td>North</td>
+        <td>$188</td>
+        <td>In-stock</td>
+    </tr>
+    <tr>
+        <td>11</td>
+        <td>Clothing</td>
+        <td>North</td>
+        <td>$188</td>
+        <td>In-stock</td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td>Clothing</td>
+        <td>North</td>
+        <td>$188</td>
+        <td>In-stock</td>
+    </tr>
+    </tbody>
+</table>
+<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    // 选取表格，并且在表格后添加分页div
+    $('.data').after('<div id="nav"></div>');
+    // 每页的行数
+    var rowsShow = 4;
+    // 表格总行数
+    var rowsNum = $('.data tbody tr').length;
+    // 页数
+    var numPages = Math.ceil(rowsNum/rowsShow);
+    // alert(numPages);
+    // 为nav添加a标签
+    for (var i=0; i<numPages;i++){
+        var pageNum = i+1;
+        // i变量的双重引号要注意
+        $('#nav').append('<a href="#" rel="'+i+'">'+pageNum+'</a>')
+    }
+    // 隐藏所有行.显示第一页
+    $('.data tbody tr').hide();
+    $('.data tbody tr').slice(0,rowsShow).show();
+    // 为第一个选中的下标添加样式
+    $('#nav a:first').addClass('active');
+    // 为链接添加鼠标单击事件
+    $('#nav a').bind('click', function() {
+        $('#nav a').removeClass('active');
+        $(this).addClass('active');
+        var currPage = $(this).attr('rel');
+        var startItem = rowsShow * currPage;
+        var endItem = startItem + rowsShow;
+        $('.data tbody tr').css('opacity','0').hide().slice(startItem, endItem).css('display','table-row').animate({opacity:1}, 300);
+        // alert(endItem);
+
+    });
+</script>
+</body>
+</html>
