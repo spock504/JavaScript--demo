@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name = "viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, minimum-scale = 1.0,user-scalable=1.0">
+    <meta name = "app-mobile-web-app-capable" content="yes"/>
+    <meta name="app-mobile-web-app-status-bar-style" content="black"/>
+    <title>iso设备按键支付界面</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <div class="shop">
+        <h2 class="title">成都金普惠科技有限公司</h2>
+        <div class="input-box">
+            金额
+            <span class="input">
+                <span>￥</span>
+                <span class="input-num" id="input-num"></span>
+                <!-- 光标 -->
+                <span class="cursor"></span>
+            </span>
+        </div>
+    </div>
+        <div class="num-keyboard clearfix">
+            <p class="support">由成都金普惠科技提供技术支持</p>
+            <!-- 左边键盘 -->
+             <div class="num-box">
+                <div class="number-item clearfix">
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                </div>
+                <div class="number-item clearfix">
+                    <span>4</span>
+                    <span>5</span>
+                    <span>6</span>
+                </div>
+                <div class="number-item clearfix">
+                    <span>7</span>
+                    <span>8</span>
+                    <span>9</span>
+                </div>
+                <div class="number-litem clearfix">
+                    <span id="zero">0</span>
+                    <span id="dot">.</span>
+                </div>
+             </div>
+             <!-- 右边操作 -->
+             <div class="handle-box">
+                 <div class="cancle" id="cancle"></div>
+                 <form action="index.html">
+                     确认<br/>支付
+                      <input type="hidden" id="confirm-btn" value="">
+                     <input type="submit">
+                 </form>
+             </div>
+       </div>
+<script type="text/javascript" src="board.js"></script>
+</body>
+</html>
