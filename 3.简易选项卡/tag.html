@@ -75,14 +75,14 @@
         // 遍历li标签
         for (var i=0; i<lis.length; i++ ){
             lis[i].index = i;
-            lis[i].onclick = function() {
+            lis[i].addEventListener('click',function() {
                 for (var j = 0; j<divs.length; j++) {
                     lis[j].className = "";
                     divs[j].className = "";
                 }
             this.className = "sec";
             divs[this.index].className = "cur";
-            }
+            },false)
         }
     </script>
 </body>

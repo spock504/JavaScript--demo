@@ -24,7 +24,7 @@
         }
         .box {
             margin: 10px;
-        border: 1px solid #ccc;
+            border: 1px solid #ccc;
         }
         p {
             margin: 20px;
@@ -43,7 +43,7 @@
         Ad.className = 'hide';
     }
     var h=0;
-    var step = 1;
+    var step = 2;
     function Addown() {
         Ad.style.height = h+"px";
         Ad.style.display = "block";
@@ -57,7 +57,7 @@
     function Adup() {
         Ad.style.height = h+"px";
         if (h>0) {
-            h-=1;
+            h-=step;
             setTimeout(Adup, 1);
         }
     }

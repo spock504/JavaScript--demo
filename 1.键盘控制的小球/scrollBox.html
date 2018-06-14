@@ -7,6 +7,8 @@
         #box {
             width: 100px;
             height: 100px;
+            text-align: center;
+            line-height: 100px;
             background-color: #317ef3;
             border-radius: 50%;
             border: 5px solid #575ee7;
@@ -15,14 +17,14 @@
     </style>
 </head>
 <body>
-    <div id="box"></div>
+    <div id="box">键盘控制</div>
     <script type="text/javascript">
         window.onload = function() {
             var box = document.getElementById("box");
             var clientWidth = document.body.clientWidth || document.documentElement.clientWidth;
             var clientHeight = document.body.clientHeight || document.documentElement.clientHeight;
             var timer = null;
-
+            console.log(box.offsetLeft);
             document.onkeydown = function(ev) {
                 var ev = ev || event;
                 clearInterval(timer);
@@ -38,7 +40,7 @@
                     case 38:  //上
                         if ( box.offsetTop > 0) {
                             box.style.top = box.offsetTop - 10 + "px";
-                        }
+                        } 
                         break;
                     case 39:  //右
                         if ( box.offsetLeft < clientWidth - box.offsetWidth) {

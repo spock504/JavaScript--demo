@@ -1,6 +1,8 @@
 ul.skin li.cur {
     padding: 0;
     border: 5px solid #ff0000;
+    background-color: #fff;
+    
 }
 .nav {
     background-color: #ff0000;

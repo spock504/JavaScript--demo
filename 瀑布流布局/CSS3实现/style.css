@@ -1,0 +1,25 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+#main {
+    -webkit-column-width: 222px;
+    -moz-column-width: 222px;
+    -o-column-width: 222px;
+    -ms-column-width: 222px;
+    column-width: 222px;
+}
+.box {
+    padding: 0 5px;
+}
+.pic {
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px #ccc;
+    border-radius: 5px;
+    padding: 5px;
+}
+img {
+    width: 200px;
+    height: auto;
+
+}
