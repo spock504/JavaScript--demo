@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>工具提示</title>
+    <style>
+        .tooltip {
+            display: none;
+            position: absolute;
+            border: 1px solid #333;
+            background-color: #ffed8a;
+            padding: 2px 6px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <li><a href="#" class="location" title="one thing">第一可口可乐</a></li>
+    <li><a href="#" class="location" title="two thing">第二可口可乐</a></li>
+    <li><a href="#" class="location" title="three thing">第三可口可乐</a></li>
+    <li><a href="#" class="location" title="four thing">第四可口可乐</a></li>
+</ul>
+<script src="../jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+    $('.location').hover(function(event) {
+        /* Stuff to do when the mouse enters the element */
+        // 取title的值，并存在data中
+        var titleText = $(this).attr('title');
+        $(this).data('tipText',titleText)
+            .removeAttr('title');
+        //添加那个提示，并且确定位置
+        $('<p class="tooltip"></p>')
+            .text(titleText)
+            .appendTo('body')
+            .css({
+                'top':(event.pageY-10)+'px',
+                'left':(event.pageX+20)+'px'
+            })
+            .fadeIn('slow');
+    }, function() {
+        /* Stuff to do when the mouse leaves the element */
+        // 鼠标移开后添加title,并且移除提示
+        $(this).attr('title',$(this).data('tipText'));
+        $('.tooltip').remove()
+    }).mousemove(function(event) {
+        /* Act on the event */
+        $('.tooltip')
+            .css({
+                'top': (event.pageY-10)+'px',
+                'left': (event.pageX+20)+'px'
+            });
+    });;
+</script>
+</body>
+</html>

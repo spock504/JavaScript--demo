@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>下拉菜单</title>
+    <style type="text/css">
+        body,nav,ul {
+            padding: 0;
+            margin: 0;
+        }
+        a{
+            text-decoration: none;
+        }
+        li {
+            list-style: none;
+        }
+        /* 设置相对定位，子ul绝对定位来排列 */
+        #menu {
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+        #menu li {
+            text-align: center;
+            float: left;
+        }
+        /* 链接的宽度和子ul的宽度一致 */
+        #menu a {
+            width: 10em;
+            display: block;
+            padding: 4px;
+        }
+        #menu li ul {
+            position: absolute;
+            width: 10em;
+            left: -999em;
+        }
+        /* 鼠标悬浮在li上，和子ul上时显示子列表 */
+        #menu li:hover ul,#menu li ul:hover{
+            left: auto;
+        }
+    </style>
+</head>
+<body>
+<h3>跨浏览器的菜单</h3>
+<p>css就能够完成该效果，加上jquery在旧式浏览器也能够使用</p>
+<nav class="navigation">
+    <ul id="menu">
+        <li>
+            <a href="#">news</a>
+            <ul>
+                <li><a href="#"> one</a></li>
+                <li><a href="#"> two</a></li>
+                <li><a href="#"> three</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">member</a>
+            <ul>
+                <li><a href="#"> four</a></li>
+                <li><a href="#"> five</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">about</a>
+            <ul>
+                <li><a href="#"> six</a></li>
+                <li><a href="#"> seven</a></li>
+                <li><a href="#"> eight</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<script type="text/javascript" src="../jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+    $('#menu li ul').css({
+        'display': 'none',
+        'left':'auto'
+    });
+    $('#menu li').hover(function(){
+        $(this)
+        .find('ul')
+        .stop(true, true) //stop(clearQueue, gotoEnd) 确保用户在菜单上快速移动鼠标时，菜单不会积累太多的动画队列
+        .slideDown('fast')
+    },function(){
+        $(this)
+        .find('ul')
+        .stop(true,true)
+        .fadeOut('normal')
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基本选项卡</title>
+    <style type="text/css">
+#info{
+    width: 300px;
+    border: 1px solid #999;
+    padding: 0 10px;
+}
+#info-nav{
+    margin: 0;
+    padding: 3px 0;
+    list-style: none;
+}
+#info-nav li{
+    display: inline;
+    background: #ccc;
+    border: 1px solid #888;
+    border-bottom: 0;
+    margin-right:2px;
+    padding: 3px 10px;
+}
+#info-nav li a:hover{
+    color:#d15600;
+}
+#info-nav li.current{ 
+    background: #fff;
+    padding-bottom: 4px;
+}
+    </style>
+</head>
+<body>
+    <div id="container">
+      <ul id="info-nav">
+        <li><a href="#intro">Intro</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#disclaimer">Disclaimer</a></li>
+      </ul>
+        <div id="info">
+            <p id="intro">
+                Welcome to <strong>StarTrackr!</strong> the planet's premier celebrity tracking and monitoring service. Need to know where in the world the best bands, musicians or producers are within 2.2 square meters? You've come to the right place. We have a very special special on B-grade celebs this week, so hurry in!       
+            </p>
+        <p id="about">
+          StarTrackr! was founded in early 2009 when a young entrepreneur from Los Angeles discovered a way to tag people with GPS-enabled RFID tags without their knowledge. Being from LA, his first thought was to use this technology to enable fans to track and locate their favourite celebrities. And thus the phenomenon was born!
+        </p>
+            <p id="disclaimer">
+                Disclaimer! This service is not intended for those with criminal intent. Celebrities are kind of like people so their privacy should be respected.
+            </p>
+      </div>
+<script type="text/javascript" src="../jquery-1.7.1.min.js"></script>
+<script>
+    //默认除第一个p外的全部隐藏
+    $('#info p:not(:first)').hide();
+    // 给第一个li添加样式
+    $('#info-nav li').click(function(event) {
+        //禁止默认链接
+        event.preventDefault();
+        $('#info-nav li').removeClass('current');
+        $(this).addClass('current');
+        
+        $('#info p').hide();
+        var clicked = $(this).find('a:first').attr('href');
+        $(clicked).fadeIn('fast');
+    }).eq(0).addClass('current');
+</script>
+</body>
+</html>
